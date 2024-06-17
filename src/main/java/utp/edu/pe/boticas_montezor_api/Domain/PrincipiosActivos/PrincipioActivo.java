@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PRINCPIOSACTIVOS")
+@Table(name = "principiosactivos")
 public class PrincipioActivo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PRINCIPIOACTIVOID")
+    @Column(name = "principioactivoid")
     private Long Id;
 
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String Nombre;
 
     public PrincipioActivo(DataRegisterPrincipioActivo data) {

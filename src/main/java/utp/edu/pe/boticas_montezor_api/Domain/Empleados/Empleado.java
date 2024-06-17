@@ -16,20 +16,20 @@ import java.util.List;
 public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EmpleadoID")
+    @Column(name = "empleadoid")
     private Long id;
 
     @Column(name = "Nombres")
     private String nombres;
 
-    @Column(name = "CorreoElectronico")
+    @Column(name = "correoelectronico")
     private String correo;
 
-    @Column(name = "Telefono")
+    @Column(name = "telefono")
     private String telefono;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RolID")
+    @JoinColumn(name = "rolid", referencedColumnName = "RolId")
     private Rol rol;
 
     public Empleado(DataRegisterEmpleado data) {

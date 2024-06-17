@@ -12,16 +12,16 @@ import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PRODUCTOFORMAFARMACEUTICA")
+@Table(name = "productoformafarmaceutica")
 public class ProductoFormaFarmaceutica {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCTOID")
+    @JoinColumn(name = "productoid")
     private Producto producto;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FORMAFARMACEUTICAID")
+    @JoinColumn(name = "formafarmaceuticaid")
     private FormaFarmaceutica formaFarmaceutica;
 
     public ProductoFormaFarmaceutica(DataRegisterProductoFormaFarmaceutica data) {

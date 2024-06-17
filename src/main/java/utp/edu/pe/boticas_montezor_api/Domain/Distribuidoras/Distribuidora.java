@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @Table(name = "distribuidoras")
 public class Distribuidora {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DistribuidoraID")
+    @Column(name = "distribuidoraid")
     private Long id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "Direccion")
+    @Column(name = "direccion")
     private String direccion;
 
-    @Column(name = "Telefono")
+    @Column(name = "telefono")
     private String telefono;
 
-    @Column(name = "Correo")
+    @Column(name = "correo")
     private String correo;
 
     public Distribuidora(DataRegisterDistribuidora data) {

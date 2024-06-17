@@ -18,43 +18,43 @@ import java.time.LocalDate;
 @Table(name = "PRODUCTOS")
 public class Producto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProductoID")
+    @Column(name = "productoid")
     private Long id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "PrecioCompra")
+    @Column(name = "preciocompra")
     private double precioCompra;
 
-    @Column(name = "PrecioVenta")
+    @Column(name = "precioventa")
     private BigDecimal precioVenta;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GrupoFarmaceuticoID")
+    @JoinColumn(name = "grupofarmaceuticoid")
     private GrupoFarmaceutico grupoFaramaceutico;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LaboratorioID")
+    @JoinColumn(name = "laboratorioid")
     private Laboratorio laboratorio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DistribuidoraID")
+    @JoinColumn(name = "distribuidoraid")
     private Distribuidora distribuidora;
 
-    @Column(name = "FechaVencimiento")
+    @Column(name = "fechavencimiento")
     private LocalDate fechaVencimiento;
 
-    @Column(name = "Cantidad")
+    @Column(name = "cantidad")
     private int cantidad;
 
-    @Column(name = "Lote")
+    @Column(name = "lote")
     private String lote;
 
-    @Column(name = "ConcentracionFarmaceutica")
+    @Column(name = "concentracionfarmaceutica")
     private String concentracion;
 
     public Producto(Long id) {

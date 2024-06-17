@@ -17,24 +17,24 @@ import java.math.BigDecimal;
 public class DetalleFactura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DetalleFacturaID")
+    @Column(name = "detallerfacturaid")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "VentaID")
+    @JoinColumn(name = "ventaid")
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductoID")
+    @JoinColumn(name = "productoid")
     private Producto producto;
 
-    @Column(name = "Cantidad")
+    @Column(name = "cantidad")
     private int cantidad;
 
-    @Column(name = "Precio")
+    @Column(name = "precio")
     private BigDecimal precio;
 
-    @Column(name = "Subtotal")
+    @Column(name = "subtotal")
     private BigDecimal subtotal;
 
     public DetalleFactura(DataRegisterDetalleFactura data) {

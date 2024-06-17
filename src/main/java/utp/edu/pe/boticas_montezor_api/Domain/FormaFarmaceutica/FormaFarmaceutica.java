@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "FORMASFARMACEUTICAS")
+@Table(name = "formasfarmaceuticas")
 public class FormaFarmaceutica {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FormaFarmaceuticaID")
+    @Column(name = "formasfarmaceuticasid")
     private Long id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
     private String nombre;
 
     public FormaFarmaceutica(DataRegisterFormaFarmaceutica data){

@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ClienteID")
+    @Column(name = "Cclientesid")
     private Long id;
 
-    @Column(name = "Nombres")
+    @Column(name = "nombres")
     private String nombres;
 
     @Column(name = "DNI")

@@ -11,15 +11,15 @@ import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivo;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "RECETARIO")
+@Table(name = "recetario")
 public class Recetario {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PrincipioActivoID")
+    @JoinColumn(name = "principioActivoid")
     private PrincipioActivo principioActivo;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "EnfermedadID")
+    @JoinColumn(name = "enfermedadid")
     private Enfermedad enfermedad;
 }

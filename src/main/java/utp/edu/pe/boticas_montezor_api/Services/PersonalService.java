@@ -39,8 +39,8 @@ public class PersonalService {
         return empleadoRepository.findById(id);
     }
 
-    public List<Empleado> getEmployees() {
-        return empleadoRepository.findAll();
+    public List<DataListEmpleado> getEmployees() {
+        return empleadoRepository.findAll().stream().map(DataListEmpleado::new).toList();
     }
 
     public DataListEmpleado loginEmployee(DataLoginEmpleado data) {

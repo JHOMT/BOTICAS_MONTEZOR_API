@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ENFERMEDADES")
+@Table(name = "enfermedades")
 public class Enfermedad {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EnfermedadID")
+    @Column(name = "enfermedadid")
     private Long id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
     public Enfermedad(DataRegisterEnfermedad data){

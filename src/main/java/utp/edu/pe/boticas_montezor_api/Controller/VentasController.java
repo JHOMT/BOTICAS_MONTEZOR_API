@@ -26,9 +26,4 @@ public class VentasController {
     public ResponseEntity<?> listarVentas() {
         return ResponseEntity.ok(ventaProductoService.listarVentas());
     }
-
-    @GetMapping("/${ventaId}")
-    public ResponseEntity<?> listarVentasPorCliente(@PathVariable Long ventaId) {
-        return ResponseEntity.ok(ventaProductoService.listarVentasConDetalle(ventaId));
-    }
 }
