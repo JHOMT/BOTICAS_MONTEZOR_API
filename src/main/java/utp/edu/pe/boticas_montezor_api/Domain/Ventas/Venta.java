@@ -48,7 +48,7 @@ public class Venta {
                 new Empleado(data.empleadoID()),
                 LocalDateTime.now(),
                 data.tipoFactura(),
-                BigDecimal.valueOf(data.total())
+                null
         );
     }
 }

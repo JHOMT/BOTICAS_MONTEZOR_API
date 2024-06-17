@@ -1,12 +1,14 @@
 package utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura;
 
+import java.math.BigDecimal;
+
 public record DataListDetalleFactura(
         Long id,
         Long ventaId,
         Long productoId,
         int cantidad,
-        double precio,
-        double subtotal
+        BigDecimal precio,
+        BigDecimal subtotal
 ) {
     public DataListDetalleFactura(DetalleFactura data) {
         this(
