@@ -1,0 +1,37 @@
+package utp.edu.pe.boticas_montezor_api.Services;
+
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import utp.edu.pe.boticas_montezor_api.Domain.Productos.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ProductosService {
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    public Boolean registrar(@NotNull DataRegisterProducto producto) {
+        Optional<Producto> productoOptional = productoRepository.findByNombreAndLaboratorio(producto.nombre(), producto.laboratorioId());
+        Producto productoNuevo = new Producto();
+        if (productoOptional.isPresent()) {
+            productoNuevo= productoOptional.get();
+            productoNuevo.setCantidad(productoNuevo.getCantidad() + producto.cantidad());
+        }else{
+            productoNuevo = new Producto(producto);
+        }
+        productoRepository.save(productoNuevo);
+        return true;
+    }
+    public Boolean actualizar(@NotNull DataUpdateProducto producto) {
+        Optional<Producto> productoOptional = Optional.ofNullable(productoRepository.findById(producto.id())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
+        productoRepository.save(new Producto(producto));
+        return true;
+    }
+    public List<DataListProductos> listar() {
+        return productoRepository.findAll().stream().map(DataListProductos::new).toList();
+    }
+}
