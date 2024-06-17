@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: utp.edu.pe.boticas_montezor_api.BoticasMontezorApiApplicatio
+ n
+

@@ -33,4 +33,9 @@ public class PersonalController {
     public ResponseEntity<?> getPersonal(@PathVariable Long id) {
         return ResponseEntity.ok(personalService.getEmployee(id));
     }
+
+    @GetMapping("/roles")
+    public ResponseEntity<?> getRoles() {
+        return ResponseEntity.ok(personalService.getRoles());
+    }
 }

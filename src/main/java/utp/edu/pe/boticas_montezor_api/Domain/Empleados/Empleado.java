@@ -32,11 +32,14 @@ public class Empleado {
     @JoinColumn(name = "rolid", referencedColumnName = "RolId")
     private Rol rol;
 
+    private String password;
+
     public Empleado(DataRegisterEmpleado data) {
         this.nombres = data.nombres();
         this.correo = data.correo();
         this.telefono = data.telefono();
         this.rol = new Rol(data.rol());
+        this.password = data.password();
     }
 
     public Empleado(Long id) {

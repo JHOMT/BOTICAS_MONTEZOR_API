@@ -8,6 +8,7 @@ public record DataRegisterEmpleado (
     @NotNull String dni,
     @NotNull String correo,
     @NotNull String telefono,
-    @NotNull Long rol
+    @NotNull Long rol,
+    @NotNull String password
 ) {
 }

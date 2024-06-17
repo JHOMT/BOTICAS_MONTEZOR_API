@@ -17,15 +17,16 @@ import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 @Entity
 @Table(name = "productoprinicipioactivo")
 public class ProductoPrincipioActivo {
-
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productoid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "productoID")
     private Producto producto;
 
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "formaFarmaceuticaid")
-    private FormaFarmaceutica formaFarmaceutica;
+    @ManyToOne
+    @JoinColumn(name = "principioActivoID")
+    private PrincipioActivo principioActivo;
 
 }

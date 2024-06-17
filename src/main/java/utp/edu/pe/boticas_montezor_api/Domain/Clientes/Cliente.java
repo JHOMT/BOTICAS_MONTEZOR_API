@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Cclientesid")
+    @Column(name = "clientesid")
     private Long id;
 
     @Column(name = "nombres")
     private String nombres;
 
-    @Column(name = "DNI")
+    @Column(name = "dni")
     private String dni;
 
-    @Column(name = "RUC")
+    @Column(name = "ruc")
     private String ruc;
 
     public Cliente(DataRegisterCliente data){

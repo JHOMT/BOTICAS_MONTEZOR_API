@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utp.edu.pe.boticas_montezor_api.Domain.Empleados.*;
+import utp.edu.pe.boticas_montezor_api.Domain.Roles.DataListRol;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.Rol;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.RolRepository;
 
@@ -23,7 +24,12 @@ public class PersonalService {
         Optional<Empleado> empleado = Optional.of(empleadoRepository.findById(data.adminId()))
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-        if (!empleado.get().getRol().getNombre().equals("Administrador")) {
+        List<Rol> roles = rolRepository.findAll();
+        if (roles.isEmpty()) {
+            insertRoles();
+        }
+
+        if (!empleado.get().getRol().getNombre().equals("ADMIN")) {
             throw new RuntimeException("No tiene permisos para registrar empleados");
         }
         Optional<Rol> rol = Optional.ofNullable(rolRepository.findById(data.rol())
@@ -35,6 +41,15 @@ public class PersonalService {
         return true;
     }
 
+    private boolean insertRoles() {
+        Rol rolAdmin = new Rol(null, "ADMIN");
+        Rol rolVendedor = new Rol(null, "EMPLOYEE");
+        rolRepository.save(rolAdmin);
+        rolRepository.save(rolVendedor);
+
+        return true;
+    }
+
     public Optional<Empleado> getEmployee(Long id) {
         return empleadoRepository.findById(id);
     }
@@ -43,14 +58,16 @@ public class PersonalService {
         return empleadoRepository.findAll().stream().map(DataListEmpleado::new).toList();
     }
 
-    public DataListEmpleado loginEmployee(DataLoginEmpleado data) {
+    public DataListEmpleado loginEmployee(@NotNull DataLoginEmpleado data) {
         Optional<Empleado> empleado = Optional.ofNullable(empleadoRepository.findByUsuario(data.usuario()))
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        if (empleado.get().getTelefono().equals(data.telefono())) {
+        if (empleado.get().getTelefono().equals(data.password())) {
             return new DataListEmpleado(empleado.get());
         } else {
             throw new RuntimeException("Contraseña incorrecta");
         }
-
+    }
+    public List<DataListRol> getRoles() {
+        return rolRepository.findAll().stream().map(DataListRol::new).toList();
     }
 }

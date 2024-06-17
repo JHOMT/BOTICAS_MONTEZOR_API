@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DataLoginEmpleado(
         @NotNull String usuario,
-        @NotNull String telefono
+        @NotNull String password
 ) {
 }
