@@ -3,10 +3,7 @@ package utp.edu.pe.boticas_montezor_api.Controller;
 import jakarta.validation.Valid;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataRegisterProducto;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataUpdateProducto;
@@ -37,6 +34,17 @@ public class ProductosController {
     public ResponseEntity<?> actualizarProducto(@RequestBody @Valid DataUpdateProducto producto) {
         return ResponseEntity.ok(productosService.actualizar(producto));
     }
+
+    @GetMapping("/grupos")
+    public ResponseEntity<?> grupos(){
+        return new ResponseEntity<>(productosService.listarGruposFarmaceuticos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/forma")
+    public ResponseEntity<?> forma() {
+        return new ResponseEntity<>(productosService.listarFormaFarmaceutica(), HttpStatus.OK);
+    }
+
     @GetMapping("/export-pdf")
     public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
         HttpHeaders headers = new HttpHeaders();

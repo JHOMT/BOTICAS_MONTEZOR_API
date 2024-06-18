@@ -3,6 +3,10 @@ package utp.edu.pe.boticas_montezor_api.Services;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utp.edu.pe.boticas_montezor_api.Domain.FormaFarmaceutica.DataListFormaFarmaceutica;
+import utp.edu.pe.boticas_montezor_api.Domain.FormaFarmaceutica.FormaFarmaceuticaRepository;
+import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.DataListGruposFarmaceuticos;
+import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.GrupoFarmaceuticoRepository;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.*;
 
 import java.util.List;
@@ -12,6 +16,10 @@ import java.util.Optional;
 public class ProductosService {
     @Autowired
     private ProductoRepository productoRepository;
+    @Autowired
+    private GrupoFarmaceuticoRepository grupoFarmaceuticoRepository;
+    @Autowired
+    private FormaFarmaceuticaRepository formaFarmaceuticaRepository;
 
     public Boolean registrar(@NotNull DataRegisterProducto producto) {
         Optional<Producto> productoOptional = productoRepository.findByNombreAndLaboratorio(producto.nombre(), producto.laboratorioId());
@@ -33,5 +41,11 @@ public class ProductosService {
     }
     public List<DataListProductos> listar() {
         return productoRepository.findAll().stream().map(DataListProductos::new).toList();
+    }
+    public List<DataListGruposFarmaceuticos> listarGruposFarmaceuticos() {
+        return grupoFarmaceuticoRepository.findAll().stream().map(DataListGruposFarmaceuticos::new).toList();
+    }
+    public List<DataListFormaFarmaceutica> listarFormaFarmaceutica() {
+        return formaFarmaceuticaRepository.findAll().stream().map(DataListFormaFarmaceutica::new).toList();
     }
 }
