@@ -45,6 +45,21 @@ public class ProductosController {
         return new ResponseEntity<>(productosService.listarFormaFarmaceutica(), HttpStatus.OK);
     }
 
+    @GetMapping("/laboratorios")
+    public ResponseEntity<?> laboratorios() {
+        return new ResponseEntity<>(productosService.listarLaboratorios(), HttpStatus.OK);
+    }
+
+    @GetMapping("/distribuidoras")
+    public ResponseEntity<?> distribuidoras() {
+        return new ResponseEntity<>(productosService.listarDistribuidoras(), HttpStatus.OK);
+    }
+
+    @GetMapping("/principios")
+    public ResponseEntity<?> principios() {
+        return new ResponseEntity<>(productosService.listarPrincipiosActivos(), HttpStatus.OK);
+    }
+
     @GetMapping("/export-pdf")
     public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
         HttpHeaders headers = new HttpHeaders();
