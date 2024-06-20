@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "distribuidoras")
+@Table(name = "Distribuidoras")
 public class Distribuidora {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "distribuidoraid")
+    @Column(name = "DistribuidoraID")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "direccion")
+    @Column(name = "Direccion")
     private String direccion;
 
-    @Column(name = "telefono")
+    @Column(name = "Telefono")
     private String telefono;
 
-    @Column(name = "correo")
+    @Column(name = "Correo")
     private String correo;
 
     public Distribuidora(DataRegisterDistribuidora data) {
@@ -33,7 +33,13 @@ public class Distribuidora {
         this.telefono = data.telefono();
         this.correo = data.correo();
     }
-
+    public  Distribuidora(DataUpdateDistribuidora data) {
+        this.id = data.id();
+        if (data.nombre() != null) this.nombre = data.nombre();
+        if (data.direccion() != null) this.direccion = data.direccion();
+        if (data.telefono() != null) this.telefono = data.telefono();
+        if (data.correo() != null) this.correo = data.correo();
+    }
     public Distribuidora(Long id) {
         this.id = id;
     }

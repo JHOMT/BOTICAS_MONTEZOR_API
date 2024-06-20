@@ -6,18 +6,18 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record DataListProductos (
-    Long id,
-    String nombre,
-    String descripcion,
-    Double precioCompra,
-    BigDecimal precioVenta,
-    Long grupoFarmaceuticoId,
-    Long laboratorioId,
-    Long distribuidoraId,
-    LocalDate fechaVencimiento,
-    Integer cantidad,
-    String lote,
-    String concentracion
+        Long id,
+        String nombre,
+        String descripcion,
+        Double precioCompra,
+        BigDecimal precioVenta,
+        Long grupoFarmaceuticoId,
+        Long laboratorioId,
+        Long distribuidoraId,
+        LocalDate fechaVencimiento,
+        Integer cantidad,
+        String lote,
+        String concentracion
 ) {
     public DataListProductos(Producto data){
         this(

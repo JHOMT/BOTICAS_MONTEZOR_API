@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utp.edu.pe.boticas_montezor_api.Domain.Empleados.DataLoginEmpleado;
 import utp.edu.pe.boticas_montezor_api.Domain.Empleados.DataRegisterEmpleado;
-import utp.edu.pe.boticas_montezor_api.Services.PersonalService;
+import utp.edu.pe.boticas_montezor_api.Domain.Empleados.EmpleadoService;
 
 @RestController
 @RequestMapping("/personal")
 public class PersonalController {
     @Autowired
-    private PersonalService personalService;
+    private EmpleadoService personalService;
 
     @PostMapping
     public ResponseEntity<?> newPersonal(@RequestBody @Valid DataRegisterEmpleado data) {

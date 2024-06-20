@@ -19,18 +19,21 @@ import java.util.Map;
 
 @Service
 public class ProductoReportGenerator {
-
     public byte[] exportToPdf(List<DataListProductos> list) {
+        System.out.println(list);
         try {
             JasperPrint jasperPrint = getReport(list);
             return JasperExportManager.exportReportToPdf(jasperPrint);
         } catch (JRException e) {
             e.printStackTrace();
             return null;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public byte[] exportToXls(List<DataListProductos> list) {
+        System.out.println(list);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             JasperPrint jasperPrint = getReport(list);
@@ -40,6 +43,8 @@ public class ProductoReportGenerator {
             exporter.exportReport();
         } catch (JRException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 byteArrayOutputStream.close();
@@ -50,17 +55,12 @@ public class ProductoReportGenerator {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private JasperPrint getReport(List<DataListProductos> list) {
-        JasperPrint jasperPrint = null;
-        try {
-            File file = ResourceUtils.getFile("classpath:Reports/ProductoReport.jrxml");
-            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("productoDataSet", new JRBeanCollectionDataSource(list));
-            jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
-        } catch (FileNotFoundException | JRException e) {
-            e.printStackTrace();
-        }
-        return jasperPrint;
+    private JasperPrint getReport(List<DataListProductos> list) throws JRException, FileNotFoundException {
+        File file = ResourceUtils.getFile("classpath:Reports/ProductoReport.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("productoDataSet", dataSource);
+        return JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
     }
 }

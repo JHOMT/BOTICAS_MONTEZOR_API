@@ -1,10 +1,9 @@
-package utp.edu.pe.boticas_montezor_api.Services;
+package utp.edu.pe.boticas_montezor_api.Domain.Empleados;
 
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utp.edu.pe.boticas_montezor_api.Domain.Empleados.*;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.DataListRol;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.Rol;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.RolRepository;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonalService {
+public class EmpleadoService {
     @Autowired
     private EmpleadoRepository empleadoRepository;
     @Autowired

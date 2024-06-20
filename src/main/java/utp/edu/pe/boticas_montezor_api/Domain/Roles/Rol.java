@@ -11,14 +11,14 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "Roles")
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rolid")
+    @Column(name = "RolID")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
     public Rol(Long id) {

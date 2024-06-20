@@ -13,23 +13,24 @@ import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 @Entity
 @Table(name = "productoformafarmaceutica")
 public class ProductoFormaFarmaceutica {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ProductoFormaFarmaceuticaId id;
 
-    @ManyToOne
-    @JoinColumn(name = "productoID")
+    @MapsId("Productoid")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "Productoid", nullable = false)
     private Producto producto;
 
-    @ManyToOne
-    @JoinColumn(name = "formaFarmaceuticaID")
+    @MapsId("Formafarmaceuticaid")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "Formafarmaceuticaid", nullable = false)
     private FormaFarmaceutica formaFarmaceutica;
 
     public ProductoFormaFarmaceutica(DataRegisterProductoFormaFarmaceutica data) {
         this(
-            null,
-            new Producto(data.productoId()),
-            new FormaFarmaceutica(data.formaFarmaceuticaId())
+                null,
+                new Producto(data.productoId()),
+                new FormaFarmaceutica(data.formaFarmaceuticaId())
         );
     }
 }

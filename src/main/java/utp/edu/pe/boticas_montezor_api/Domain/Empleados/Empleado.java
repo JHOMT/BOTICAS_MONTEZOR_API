@@ -6,40 +6,39 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import utp.edu.pe.boticas_montezor_api.Domain.Roles.Rol;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "empleados")
+@Table(name = "Empleados")
 public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "empleadoid")
+    @Column(name = "EmpleadoID")
     private Long id;
 
     @Column(name = "Nombres")
     private String nombres;
 
-    @Column(name = "correoelectronico")
+    @Column(name = "CorreoElectronico")
     private String correo;
 
-    @Column(name = "telefono")
+    @Column(name = "Telefono")
     private String telefono;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rolid", referencedColumnName = "RolId")
     private Rol rol;
 
-    private String password;
+    @Column(name = "Contraseña")
+    private String contraseña;
 
     public Empleado(DataRegisterEmpleado data) {
         this.nombres = data.nombres();
         this.correo = data.correo();
         this.telefono = data.telefono();
         this.rol = new Rol(data.rol());
-        this.password = data.password();
+        this.contraseña = data.password();
     }
 
     public Empleado(Long id) {

@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "clientesid")
+    @Column(name = "Clienteid")
     private Long id;
 
     @Column(name = "nombres")
     private String nombres;
 
-    @Column(name = "dni")
+    @Column(name = "DNI")
     private String dni;
 
-    @Column(name = "ruc")
+    @Column(name = "RUC")
     private String ruc;
 
     public Cliente(DataRegisterCliente data){
@@ -30,7 +30,12 @@ public class Cliente {
         this.dni = data.dni();
         this.ruc = data.ruc();
     }
-
+    public Cliente (DataUpdateCliente data){
+        this.id = data.id();
+        if (data.nombre() != null) this.nombres = data.nombre();
+        if (data.ruc() != null) this.nombres = data.ruc();
+        if (data.dni() != null) this.dni = data.dni();
+    }
     public Cliente(Long id) {
         this.id = id;
     }

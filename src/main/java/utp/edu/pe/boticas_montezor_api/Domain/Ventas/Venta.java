@@ -14,28 +14,28 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ventas")
+@Table(name = "Ventas")
 public class Venta {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ventaid")
+    @Column(name = "VentaID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clienteid")
+    @JoinColumn(name = "ClienteID")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "empleadoid")
+    @JoinColumn(name = "EmpleadoID")
     private Empleado empleado;
 
-    @Column(name = "fechaventa")
+    @Column(name = "FechaVenta")
     private LocalDateTime fechaVenta;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipofactura")
+    @Column(name = "TipoFactura")
     private TipoFactura tipoFactura;
 
-    @Column(name = "montototal")
+    @Column(name = "MontoTotal")
     private BigDecimal total;
 
     public Venta(Long id) {

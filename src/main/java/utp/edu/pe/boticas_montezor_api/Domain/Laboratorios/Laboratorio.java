@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "laboratorios")
+@Table(name = "Laboratorios")
 public class Laboratorio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "laboratorioid")
+    @Column(name = "Laboratorioid")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "direccion")
+    @Column(name = "Direccion")
     private String direccion;
 
-    @Column(name = "telefono")
+    @Column(name = "Telefono")
     private String telefono;
 
-    @Column(name = "correo")
+    @Column(name = "Correo")
     private String correo;
 
     public Laboratorio(DataRegisterLaboratorio data){

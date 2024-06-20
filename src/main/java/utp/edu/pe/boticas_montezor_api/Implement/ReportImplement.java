@@ -20,16 +20,20 @@ public class ReportImplement implements ProductoInterface {
     private ProductoReportGenerator productoReportGenerator;
 
     @Override
-    public byte[] exportPdf() throws JRException, FileNotFoundException {
+    public byte[] exportPdf(){
         List<Producto> productos = productoRepository.findAll();
-        List<DataListProductos> dataListProductos = productos.stream().map(DataListProductos::new).collect(Collectors.toList());
+        List<DataListProductos> dataListProductos = productos.stream()
+                .map(DataListProductos::new)
+                .collect(Collectors.toList());
         return productoReportGenerator.exportToPdf(dataListProductos);
     }
 
     @Override
-    public byte[] exportXls() throws JRException, FileNotFoundException {
+    public byte[] exportXls() {
         List<Producto> productos = productoRepository.findAll();
-        List<DataListProductos> dataListProductos = productos.stream().map(DataListProductos::new).collect(Collectors.toList());
+        List<DataListProductos> dataListProductos = productos.stream()
+                .map(DataListProductos::new)
+                .collect(Collectors.toList());
         return productoReportGenerator.exportToXls(dataListProductos);
     }
 }

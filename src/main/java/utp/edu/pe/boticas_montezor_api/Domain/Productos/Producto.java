@@ -15,43 +15,43 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PRODUCTOS")
+@Table(name = "Productos")
 public class Producto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productoid")
+    @Column(name = "ProductoID")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name = "Descripcion")
     private String descripcion;
 
-    @Column(name = "preciocompra")
+    @Column(name = "PrecioCompra")
     private double precioCompra;
 
-    @Column(name = "precioventa")
+    @Column(name = "PrecioVenta")
     private BigDecimal precioVenta;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grupofarmaceuticoid")
+    @JoinColumn(name = "Grupofarmaceuticoid")
     private GrupoFarmaceutico grupoFaramaceutico;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "laboratorioid")
+    @JoinColumn(name = "Laboratorioid")
     private Laboratorio laboratorio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "distribuidoraid")
+    @JoinColumn(name = "Distribuidoraid")
     private Distribuidora distribuidora;
 
-    @Column(name = "fechavencimiento")
+    @Column(name = "FechaVencimiento")
     private LocalDate fechaVencimiento;
 
-    @Column(name = "cantidad")
+    @Column(name = "Cantidad")
     private int cantidad;
 
-    @Column(name = "lote")
+    @Column(name = "Lote")
     private String lote;
 
     @Column(name = "concentracionfarmaceutica")

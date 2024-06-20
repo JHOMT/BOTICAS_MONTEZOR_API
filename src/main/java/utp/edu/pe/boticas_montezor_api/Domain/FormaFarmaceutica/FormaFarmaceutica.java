@@ -13,13 +13,13 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "formasfarmaceuticas")
+@Table(name = "FormasFarmaceuticas")
 public class FormaFarmaceutica {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "formasfarmaceuticasid")
+    @Column(name = "FormaFarmaceuticaID")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
     public FormaFarmaceutica(DataRegisterFormaFarmaceutica data){
@@ -31,5 +31,10 @@ public class FormaFarmaceutica {
 
     public FormaFarmaceutica(Long id) {
         this.id = id;
+    }
+
+    public FormaFarmaceutica(DataUpdateFormaFarmaceutica data) {
+        this.id = data.id();
+        if (data.nombre() != null) this.nombre = data.nombre();
     }
 }

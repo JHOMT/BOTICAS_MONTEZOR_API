@@ -11,15 +11,18 @@ import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivo;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "recetario")
+@Table(name = "Recetario")
 public class Recetario {
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "principioActivoid")
+    @EmbeddedId
+    private RecetarioId id;
+
+    @MapsId("recetaID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "RecetaID", nullable = false)
     private PrincipioActivo principioActivo;
 
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "enfermedadid")
+    @MapsId("productoID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ProductoID", nullable = false)
     private Enfermedad enfermedad;
 }
