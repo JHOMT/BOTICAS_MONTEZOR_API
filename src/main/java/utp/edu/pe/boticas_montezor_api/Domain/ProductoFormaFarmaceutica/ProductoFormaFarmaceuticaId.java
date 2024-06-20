@@ -16,23 +16,23 @@ public class ProductoFormaFarmaceuticaId implements Serializable {
     private static final long serialVersionUID = -8270796146013827950L;
 
     @NotNull
-    @Column(name = "Productoid", nullable = false)
-    private Long productoid;
+    @Column(name = "ProductoId", nullable = false)
+    private Long productoId;
 
     @NotNull
-    @Column(name = "Formafarmaceuticaid", nullable = false)
-    private Long formafarmaceuticaid;
+    @Column(name = "FormaFarmaceuticaId", nullable = false)
+    private Long formaFarmaceuticaId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductoFormaFarmaceuticaId that = (ProductoFormaFarmaceuticaId) o;
-        return Objects.equals(productoid, that.productoid) && Objects.equals(formafarmaceuticaid, that.formafarmaceuticaid);
+        return Objects.equals(productoId, that.productoId) && Objects.equals(formaFarmaceuticaId, that.formaFarmaceuticaId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productoid, formafarmaceuticaid);
+        return Objects.hash(productoId, formaFarmaceuticaId);
     }
 }

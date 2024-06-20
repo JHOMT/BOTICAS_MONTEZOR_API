@@ -1,6 +1,7 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Productos;
 
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFactura;
+import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,5 +36,4 @@ public record DataListProductos (
                 data.getConcentracion()
         );
     }
-
 }

@@ -1,4 +1,4 @@
-package utp.edu.pe.boticas_montezor_api.Services;
+package utp.edu.pe.boticas_montezor_api.Domain.Ventas;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,6 @@ import utp.edu.pe.boticas_montezor_api.Domain.Empleados.EmpleadoRepository;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataListProductos;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.ProductoRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.Ventas.DataRegisterVenta;
-import utp.edu.pe.boticas_montezor_api.Domain.Ventas.TipoFactura;
-import utp.edu.pe.boticas_montezor_api.Domain.Ventas.Venta;
-import utp.edu.pe.boticas_montezor_api.Domain.Ventas.VentasRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -112,7 +108,6 @@ public class VentaProductoService {
         return ventasRepository.findAll();
     }
 
-    // Método para obtener detalles de venta
     public List<DataListProductos> listarVentasConDetalle(Long idVenta) {
         Venta venta = ventasRepository.findById(idVenta)
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada"));

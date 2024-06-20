@@ -16,23 +16,23 @@ public class RecetarioId implements Serializable {
     private static final long serialVersionUID = -8270796146013827950L;
 
     @NotNull
-    @Column(name = "RecetaID", nullable = false)
-    private Long recetaID;
+    @Column(name = "principioactivoId", nullable = false)
+    private Long principioId;
 
     @NotNull
-    @Column(name = "ProductoID", nullable = false)
-    private Long productoID;
+    @Column(name = "EnfermedadID", nullable = false)
+    private Long enfermedadId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecetarioId that = (RecetarioId) o;
-        return Objects.equals(recetaID, that.recetaID) && Objects.equals(productoID, that.productoID);
+        return Objects.equals(principioId, that.principioId) && Objects.equals(enfermedadId, that.enfermedadId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recetaID, productoID);
+        return Objects.hash(principioId, enfermedadId);
     }
 }

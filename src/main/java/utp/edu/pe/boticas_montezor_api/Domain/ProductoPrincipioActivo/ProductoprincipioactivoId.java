@@ -10,11 +10,13 @@ import org.hibernate.Hibernate;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 @Getter
 @Setter
 @Embeddable
 public class ProductoprincipioactivoId implements Serializable {
     private static final long serialVersionUID = -8270796146013827950L;
+
     @NotNull
     @Column(name = "Productoid", nullable = false)
     private Long productoID;
@@ -36,5 +38,4 @@ public class ProductoprincipioactivoId implements Serializable {
     public int hashCode() {
         return Objects.hash(productoID, principioActivoID);
     }
-
 }

@@ -16,13 +16,13 @@ public class Recetario {
     @EmbeddedId
     private RecetarioId id;
 
-    @MapsId("recetaID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "RecetaID", nullable = false)
+    @MapsId("principioId")
+    @JoinColumn(name = "principioactivoid", nullable = false)
     private PrincipioActivo principioActivo;
 
-    @MapsId("productoID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ProductoID", nullable = false)
+    @MapsId("enfermedadId")
+    @JoinColumn(name = "enfermedadid", nullable = false)
     private Enfermedad enfermedad;
 }

@@ -20,7 +20,7 @@ public class Empleado {
     @Column(name = "Nombres")
     private String nombres;
 
-    @Column(name = "CorreoElectronico")
+    @Column(name = "Correoelectronico")
     private String correo;
 
     @Column(name = "Telefono")

@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataRegisterDetalleFactura;
-import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.Ventas.DataRegisterVenta;
-import utp.edu.pe.boticas_montezor_api.Services.VentaProductoService;
+import utp.edu.pe.boticas_montezor_api.Domain.Ventas.VentaProductoService;
 
 import java.util.List;
 

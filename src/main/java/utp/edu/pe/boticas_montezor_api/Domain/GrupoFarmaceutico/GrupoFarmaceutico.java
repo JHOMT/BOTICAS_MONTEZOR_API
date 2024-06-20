@@ -21,4 +21,8 @@ public class GrupoFarmaceutico {
     public GrupoFarmaceutico(Long id) {
         this.id = id;
     }
+
+    public GrupoFarmaceutico(DataRegisterGrupoFarmaceutico data) {
+        this.nombre = data.nombre();
+    }
 }

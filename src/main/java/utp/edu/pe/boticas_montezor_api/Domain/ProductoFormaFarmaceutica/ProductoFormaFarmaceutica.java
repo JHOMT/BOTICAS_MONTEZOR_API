@@ -16,14 +16,14 @@ public class ProductoFormaFarmaceutica {
     @EmbeddedId
     private ProductoFormaFarmaceuticaId id;
 
-    @MapsId("Productoid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Productoid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("productoId")
+    @JoinColumn(name = "ProductoId", nullable = false)
     private Producto producto;
 
-    @MapsId("Formafarmaceuticaid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Formafarmaceuticaid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("formaFarmaceuticaId")
+    @JoinColumn(name = "FormaFarmaceuticaId", nullable = false)
     private FormaFarmaceutica formaFarmaceutica;
 
     public ProductoFormaFarmaceutica(DataRegisterProductoFormaFarmaceutica data) {

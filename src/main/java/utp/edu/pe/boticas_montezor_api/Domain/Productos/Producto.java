@@ -27,10 +27,10 @@ public class Producto {
     @Column(name = "Descripcion")
     private String descripcion;
 
-    @Column(name = "PrecioCompra")
+    @Column(name = "Preciocompra")
     private double precioCompra;
 
-    @Column(name = "PrecioVenta")
+    @Column(name = "Precioventa")
     private BigDecimal precioVenta;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +45,7 @@ public class Producto {
     @JoinColumn(name = "Distribuidoraid")
     private Distribuidora distribuidora;
 
-    @Column(name = "FechaVencimiento")
+    @Column(name = "Fechavencimiento")
     private LocalDate fechaVencimiento;
 
     @Column(name = "Cantidad")

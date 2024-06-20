@@ -1,19 +1,13 @@
-package utp.edu.pe.boticas_montezor_api.Services;
+package utp.edu.pe.boticas_montezor_api.Domain.Productos;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utp.edu.pe.boticas_montezor_api.Domain.Distribuidoras.DataListDistribuidora;
 import utp.edu.pe.boticas_montezor_api.Domain.Distribuidoras.DistribuidoraRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.FormaFarmaceutica.DataListFormaFarmaceutica;
 import utp.edu.pe.boticas_montezor_api.Domain.FormaFarmaceutica.FormaFarmaceuticaRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.DataListGruposFarmaceuticos;
 import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.GrupoFarmaceuticoRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.Laboratorios.DataListLaboratorios;
 import utp.edu.pe.boticas_montezor_api.Domain.Laboratorios.LaboratorioRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.DataListPrincipioActivo;
 import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivoRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.Productos.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +18,6 @@ public class ProductosService {
     private ProductoRepository productoRepository;
     @Autowired
     private GrupoFarmaceuticoRepository grupoFarmaceuticoRepository;
-    @Autowired
-    private FormaFarmaceuticaRepository formaFarmaceuticaRepository;
-    @Autowired
-    private LaboratorioRepository laboratorioRepository;
-    @Autowired
-    private DistribuidoraRepository distribuidoraRepository;
-    @Autowired
-    private PrincipioActivoRepository principioActivoRepository;
 
     public Boolean registrar(@NotNull DataRegisterProducto producto) {
         Optional<Producto> productoOptional = productoRepository.findByNombreAndLaboratorio(producto.nombre(), producto.laboratorioId());
@@ -45,28 +31,25 @@ public class ProductosService {
         productoRepository.save(productoNuevo);
         return true;
     }
-    public Boolean actualizar(@NotNull DataUpdateProducto producto) {
+    public Boolean update(@NotNull DataUpdateProducto producto) {
         Optional<Producto> productoOptional = Optional.ofNullable(productoRepository.findById(producto.id())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         productoRepository.save(new Producto(producto));
         return true;
     }
+    public Boolean delete(@NotNull Long id) {
+        Optional<Producto> productoOptional = Optional.ofNullable(productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
+        productoRepository.delete(productoOptional.get());
+        return true;
+    }
     public List<DataListProductos> listar() {
         return productoRepository.findAll().stream().map(DataListProductos::new).toList();
     }
-    public List<DataListGruposFarmaceuticos> listarGruposFarmaceuticos() {
-        return grupoFarmaceuticoRepository.findAll().stream().map(DataListGruposFarmaceuticos::new).toList();
+    public List<DataListProductos> listarPorNombre(@NotNull String nombre) {
+        return productoRepository.findByNombre(nombre).stream().map(DataListProductos::new).toList();
     }
-    public List<DataListFormaFarmaceutica> listarFormaFarmaceutica() {
-        return formaFarmaceuticaRepository.findAll().stream().map(DataListFormaFarmaceutica::new).toList();
-    }
-    public List<DataListLaboratorios> listarLaboratorios() {
-        return laboratorioRepository.findAll().stream().map(DataListLaboratorios::new).toList();
-    }
-    public List<DataListDistribuidora> listarDistribuidoras() {
-        return distribuidoraRepository.findAll().stream().map(DataListDistribuidora::new).toList();
-    }
-    public List<DataListPrincipioActivo> listarPrincipiosActivos() {
-        return principioActivoRepository.findAll().stream().map(DataListPrincipioActivo::new).toList();
+    public List<DataListProductos> listarPorLaboratorio(@NotNull Long laboratorioId) {
+        return productoRepository.findById(laboratorioId).stream().map(DataListProductos::new).toList();
     }
 }

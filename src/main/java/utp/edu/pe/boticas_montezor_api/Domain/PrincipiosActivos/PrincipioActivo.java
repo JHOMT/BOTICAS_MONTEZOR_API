@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Principiosactivos")
 public class PrincipioActivo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PrincipioActivoID")
+    @Column(name = "PrincipioactivoID")
     private Long Id;
 
     @Column(name = "Nombre")
@@ -21,7 +21,10 @@ public class PrincipioActivo {
     public PrincipioActivo(DataRegisterPrincipioActivo data) {
         this.Nombre = data.nombre();
     }
-
+    public PrincipioActivo(DataUpdatePrincipioActivo data) {
+        this.Id = data.id();
+        if (data.nombre() != null) this.Nombre = data.nombre();
+    }
     public PrincipioActivo(Long id) {
         this.Id = id;
     }
