@@ -3,16 +3,16 @@ package utp.edu.pe.boticas_montezor_api.Domain.ProductoPrincipioActivo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class ProductoprincipioactivoId implements Serializable {
     private static final long serialVersionUID = -8270796146013827950L;

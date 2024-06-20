@@ -2,6 +2,7 @@ package utp.edu.pe.boticas_montezor_api.Controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataRegisterProducto;
@@ -42,5 +43,32 @@ public class ProductoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         return ResponseEntity.ok(productosService.delete(id));
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<byte[]> getReport(@RequestParam String format) {
+        try {
+            byte[] reportBytes = productosService.exportReport(format);
+
+            String mimeType;
+            String fileName;
+            if ("pdf".equalsIgnoreCase(format)) {
+                mimeType = "application/pdf";
+                fileName = "ProductosReport.pdf";
+            } else if ("xls".equalsIgnoreCase(format)) {
+                mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                fileName = "ProductosReport.xlsx";
+            } else {
+                throw new IllegalArgumentException("Unknown report format: " + format);
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+                    .contentType(org.springframework.http.MediaType.parseMediaType(mimeType))
+                    .body(reportBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }

@@ -13,10 +13,10 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "FormasFarmaceuticas")
+@Table(name = "Formasfarmaceuticas")
 public class FormaFarmaceutica {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FormaFarmaceuticaID")
+    @Column(name = "FormafarmaceuticaID")
     private Long id;
 
     @Column(name = "Nombre")

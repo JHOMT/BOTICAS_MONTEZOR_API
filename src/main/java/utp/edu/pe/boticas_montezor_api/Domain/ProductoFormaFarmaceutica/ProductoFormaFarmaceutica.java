@@ -18,12 +18,12 @@ public class ProductoFormaFarmaceutica {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productoId")
-    @JoinColumn(name = "ProductoId", nullable = false)
+    @JoinColumn(name = "Productoid", nullable = false)
     private Producto producto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("formaFarmaceuticaId")
-    @JoinColumn(name = "FormaFarmaceuticaId", nullable = false)
+    @JoinColumn(name = "Formafarmaceuticaid", nullable = false)
     private FormaFarmaceutica formaFarmaceutica;
 
     public ProductoFormaFarmaceutica(DataRegisterProductoFormaFarmaceutica data) {
@@ -32,5 +32,11 @@ public class ProductoFormaFarmaceutica {
                 new Producto(data.productoId()),
                 new FormaFarmaceutica(data.formaFarmaceuticaId())
         );
+    }
+
+    public ProductoFormaFarmaceutica(Producto productoGuardado, FormaFarmaceutica formaFarmaceutica) {
+        this.producto = productoGuardado;
+        this.formaFarmaceutica = formaFarmaceutica;
+        this.id = new ProductoFormaFarmaceuticaId(productoGuardado.getId(), formaFarmaceutica.getId());
     }
 }
