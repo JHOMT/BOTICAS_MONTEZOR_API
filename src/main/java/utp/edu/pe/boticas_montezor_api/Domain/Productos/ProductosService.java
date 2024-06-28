@@ -1,18 +1,15 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Productos;
 
 import jakarta.transaction.Transactional;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import utp.edu.pe.boticas_montezor_api.Domain.Distribuidoras.Distribuidora;
 import utp.edu.pe.boticas_montezor_api.Domain.Distribuidoras.DistribuidoraRepository;
@@ -22,12 +19,10 @@ import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.GrupoFarmaceutic
 import utp.edu.pe.boticas_montezor_api.Domain.GrupoFarmaceutico.GrupoFarmaceuticoRepository;
 import utp.edu.pe.boticas_montezor_api.Domain.Laboratorios.Laboratorio;
 import utp.edu.pe.boticas_montezor_api.Domain.Laboratorios.LaboratorioRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.DataRegisterPrincipioActivo;
 import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivo;
 import utp.edu.pe.boticas_montezor_api.Domain.PrincipiosActivos.PrincipioActivoRepository;
 import utp.edu.pe.boticas_montezor_api.Domain.ProductoFormaFarmaceutica.ProductoFormaFarmaceutica;
 import utp.edu.pe.boticas_montezor_api.Domain.ProductoFormaFarmaceutica.ProductoFormaFarmaceuticaRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.ProductoPrincipioActivo.DataRegisterProductoPrincipioActivo;
 import utp.edu.pe.boticas_montezor_api.Domain.ProductoPrincipioActivo.ProductoPrincipioActivo;
 import utp.edu.pe.boticas_montezor_api.Domain.ProductoPrincipioActivo.ProductoPrincipioActivoRepository;
 
@@ -37,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductosService {
@@ -58,12 +54,7 @@ public class ProductosService {
     private ProductoFormaFarmaceuticaRepository productoFormaFarmaceuticaRepository;
 
     @Transactional
-    public Boolean registrar(DataRegisterProducto producto) {
-
-        Producto productoExistente = productoRepository.findByNombreAndLaboratorio(producto.nombre(), producto.laboratorioId())
-                .orElse(new Producto(producto));
-
-        productoExistente.setCantidad(productoExistente.getCantidad() + producto.cantidad());
+    public boolean registrar(@NotNull DataRegisterProducto producto) {
 
         GrupoFarmaceutico grupoFarmaceutico = grupoFarmaceuticoRepository.findById(producto.grupoFarmaceuticoId())
                 .orElseThrow(() -> new RuntimeException("Grupo Farmaceutico no encontrado"));
@@ -80,6 +71,11 @@ public class ProductosService {
         FormaFarmaceutica formaFarmaceutica = formaFarmaceuticaRepository.findById(producto.formaFarmaceuticaId())
                 .orElseThrow(() -> new RuntimeException("Forma Farmaceutica no encontrada"));
 
+        Producto productoExistente = productoRepository.findByNombreAndLaboratorio(producto.nombre(), producto.laboratorioId())
+                .orElse(new Producto(producto));
+
+        productoExistente.setCantidad(productoExistente.getCantidad() + producto.cantidad());
+
         Producto productoGuardado = productoRepository.save(productoExistente);
 
         if (principioActivo != null) {
@@ -95,13 +91,13 @@ public class ProductosService {
         return true;
     }
 
-    public Boolean update(@NotNull DataUpdateProducto producto) {
+    public boolean update(@NotNull DataUpdateProducto producto) {
         Optional<Producto> productoOptional = Optional.ofNullable(productoRepository.findById(producto.id())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         productoRepository.save(new Producto(producto));
         return true;
     }
-    public Boolean delete(@NotNull Long id) {
+    public boolean delete(@NotNull Long id) {
         Optional<Producto> productoOptional = Optional.ofNullable(productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado")));
         productoRepository.delete(productoOptional.get());
@@ -116,31 +112,48 @@ public class ProductosService {
     public List<DataListProductos> listarPorLaboratorio(@NotNull Long laboratorioId) {
         return productoRepository.findById(laboratorioId).stream().map(DataListProductos::new).toList();
     }
-    public byte[] exportReport(String format) throws Exception {
-        List<DataListProductos> productos = listar();
+
+    public List<DataListProductos> productosPorVencer(){
+        List<Producto> productos = productoRepository.findVencimientoEsteMes();
+        return productos.stream().map(DataListProductos::new).toList();
+    }
+
+    public List<DataListProductos> productosVencidos(){
+        List<Producto> productos = productoRepository.findVencidas();
+        return productos.stream().map(DataListProductos::new).toList();
+    }
+
+    public byte[] exportReport(String format, InputStream jrxmlStream) throws Exception {
+        List<DataListProductReport> productos = listReport();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productos);
-
-        InputStream reportStream = new ClassPathResource("reports/DataListProductosReport.jasper").getInputStream();
-        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportStream);
-
+        JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
         Map<String, Object> parameters = new HashMap<>();
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
-        byte[] reportBytes;
         if ("pdf".equalsIgnoreCase(format)) {
-            reportBytes = JasperExportManager.exportReportToPdf(jasperPrint);
-        } else if ("xls".equalsIgnoreCase(format)) {
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+        } else if ("html".equalsIgnoreCase(format)) {
+            ByteArrayOutputStream htmlStream = new ByteArrayOutputStream();
+            HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            exporter.setExporterOutput(new SimpleHtmlExporterOutput(htmlStream));
+            exporter.exportReport();
+            return htmlStream.toByteArray();
+        } else if ("xlsx".equalsIgnoreCase(format)) {
+            ByteArrayOutputStream excelStream = new ByteArrayOutputStream();
             JRXlsxExporter exporter = new JRXlsxExporter();
-            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-                exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(byteArrayOutputStream));
-                exporter.exportReport();
-                reportBytes = byteArrayOutputStream.toByteArray();
-            }
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(excelStream));
+            exporter.exportReport();
+            return excelStream.toByteArray();
         } else {
             throw new IllegalArgumentException("Unknown report format: " + format);
         }
+    }
 
-        return reportBytes;
+    private List<DataListProductReport> listReport() {
+        return productoRepository.findAll().stream()
+                .map(DataListProductReport::new)
+                .toList();
     }
 }

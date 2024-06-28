@@ -90,4 +90,8 @@ public class Producto {
         if (data.lote() != null) this.lote = data.lote();
         if (data.concentracion() != null) this.concentracion = data.concentracion();
     }
+
+    public Producto(String nombre) {
+        this.nombre = nombre;
+    }
 }

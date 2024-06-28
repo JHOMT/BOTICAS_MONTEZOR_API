@@ -53,6 +53,7 @@ public class RecetarioService {
         return new ListPrincipioForEnfermedad(
                 enfermedad.getId(),
                 enfermedad.getNombre(),
+                enfermedad.getDescripcion(),
                 principiosEnfermedad
         );
     }

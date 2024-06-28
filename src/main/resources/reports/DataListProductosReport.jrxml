@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DataListProductosReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b5bb1f0-df77-4a62-9f25-0b7b6956b94e">
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="id" class="java.lang.Long"/>
+    <field name="nombre" class="java.lang.String"/>
+    <field name="descripcion" class="java.lang.String"/>
+    <field name="precioCompra" class="java.lang.Double"/>
+    <field name="precioVenta" class="java.math.BigDecimal"/>
+    <field name="grupoFarmaceuticoId" class="java.lang.Long"/>
+    <field name="laboratorioId" class="java.lang.Long"/>
+    <field name="distribuidoraId" class="java.lang.Long"/>
+    <field name="fechaVencimiento" class="java.time.LocalDate"/>
+    <field name="cantidad" class="java.lang.Integer"/>
+    <field name="lote" class="java.lang.String"/>
+    <field name="concentracion" class="java.lang.String"/>
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30" uuid="b12f1c33-ec4e-4c9e-bdf1-4b9c71de3c78"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Productos]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="50" height="20" uuid="5d5b6e88-846e-43f6-8a2e-47b3a6b1f5c6"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="50" y="0" width="100" height="20" uuid="2a2a5ae7-3dc6-4c17-8b07-70749b6c13df"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Nombre]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="150" y="0" width="100" height="20" uuid="a2bdbd84-fc5d-42a5-8dc7-c37e3c60a77c"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Descripción]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="250" y="0" width="50" height="20" uuid="c1fa4c3e-9386-498e-973f-e7f6e0f343e0"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Precio Compra]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="300" y="0" width="50" height="20" uuid="6f63224e-4480-4eb4-8baf-cdfb75d9bb1e"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Precio Venta]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="350" y="0" width="50" height="20" uuid="b77b3423-48a5-4c45-9d41-9e2b88c09d16"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Cantidad]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="50" height="20" uuid="72b36a0c-6e88-4cf7-b2fa-4e761cce2af6"/>
+                <textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="50" y="0" width="100" height="20" uuid="b058d153-dbb5-43cb-bd30-fd105fb01de3"/>
+                <textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="150" y="0" width="100" height="20" uuid="a6ed90d7-9f4f-4c84-94b8-1366b4c31d2f"/>
+                <textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="250" y="0" width="50" height="20" uuid="91e76255-4af3-4e2b-8b36-199a3b8a5f32"/>
+                <textFieldExpression><![CDATA[$F{precioCompra}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="300" y="0" width="50" height="20" uuid="e4c12809-dc53-4b84-bb2a-52d21e905b18"/>
+                <textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="350" y="0" width="50" height="20" uuid="08eb1167-7f09-481f-a4cb-983383b4e5a2"/>
+                <textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -7,6 +7,7 @@ import java.util.List;
 public record ListPrincipioForEnfermedad(
     Long id,
     String enfermedad,
+    String descripcion,
     List<PrincipioEnfermedad> principiosActivos
 ) {
 }
