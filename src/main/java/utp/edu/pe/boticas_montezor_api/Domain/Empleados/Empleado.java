@@ -1,5 +1,6 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Empleados;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import utp.edu.pe.boticas_montezor_api.Domain.Roles.Rol;
 @NoArgsConstructor
 @Entity
 @Table(name = "Empleados")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

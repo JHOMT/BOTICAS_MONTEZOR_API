@@ -1,6 +1,7 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Ventas;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "Ventas")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Venta {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VentaID")
@@ -57,6 +59,18 @@ public class Venta {
                 data.tipoFactura(),
                 LocalDateTime.now(),
                 null
+        );
+    }
+
+    public Venta(Venta venta) {
+        this(
+                venta.id,
+                venta.cliente,
+                venta.empleado,
+                venta.fechaventa,
+                venta.tipoFactura,
+                venta.fechaFactura,
+                venta.total
         );
     }
 }

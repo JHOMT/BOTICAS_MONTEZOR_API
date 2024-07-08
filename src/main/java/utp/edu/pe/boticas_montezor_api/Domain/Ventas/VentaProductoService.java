@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.Cliente;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.ClienteRepository;
+import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataListDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataRegisterDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFacturaRepository;
@@ -105,8 +106,15 @@ public class VentaProductoService {
         return true;
     }
 
-    public List<Venta> listarVentas() {
-        return ventasRepository.findAll();
+
+    public List<DataListVentaDetails> listarVentas(){
+        List<Venta> ventas = ventasRepository.findAll();
+        List<DataListVentaDetails> dataListVentaDetails = new ArrayList<>();
+        for (Venta venta : ventas) {
+            List<DataListProductos> detalles = detalleFacturaRepository.findAllByVenta(venta.getId());
+            dataListVentaDetails.add(new DataListVentaDetails(new DataListVenta(venta), detalles));
+        }
+        return dataListVentaDetails;
     }
 
     public List<DataListProductos> listarVentasConDetalle(Long idVenta) {

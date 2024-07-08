@@ -5,4 +5,5 @@ public record DataRegisterVenta(
     Long empleadoID,
     TipoFactura tipoFactura
 ) {
+
 }

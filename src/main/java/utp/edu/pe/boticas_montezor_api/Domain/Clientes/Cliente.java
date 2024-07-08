@@ -1,5 +1,6 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Clientes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Clientes")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

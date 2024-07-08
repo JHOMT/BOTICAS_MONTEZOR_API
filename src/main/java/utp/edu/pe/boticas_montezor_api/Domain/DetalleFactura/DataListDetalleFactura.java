@@ -6,7 +6,9 @@ public record DataListDetalleFactura(
         Long id,
         Long ventaId,
         Long productoId,
+        String nombreProducto,
         int cantidad,
+        BigDecimal precioVenta,
         BigDecimal subtotal
 ) {
     public DataListDetalleFactura(DetalleFactura data) {
@@ -14,7 +16,9 @@ public record DataListDetalleFactura(
                 data.getId(),
                 data.getVenta().getId(),
                 data.getProducto().getId(),
+                data.getProducto().getNombre(),
                 data.getCantidad(),
+                data.getProducto().getPrecioVenta(),
                 data.getSubtotal()
         );
     }
