@@ -1,5 +1,6 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Ventas;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,14 +29,19 @@ public class Venta {
     @JoinColumn(name = "EmpleadoID")
     private Empleado empleado;
 
-    @Column(name = "FechaVenta")
-    private LocalDateTime fechaVenta;
+    @Column(name = "Fechaventa")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fechaventa;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TipoFactura")
+    @Column(name = "Tipofactura")
     private TipoFactura tipoFactura;
 
-    @Column(name = "MontoTotal")
+    @Column(name = "fechafactura")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fechaFactura;
+
+    @Column(name = "Montototal")
     private BigDecimal total;
 
     public Venta(Long id) {
@@ -49,6 +55,7 @@ public class Venta {
                 new Empleado(data.empleadoID()),
                 LocalDateTime.now(),
                 data.tipoFactura(),
+                LocalDateTime.now(),
                 null
         );
     }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "DetallesFactura")
+@Table(name = "Detallesfactura")
 public class DetalleFactura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +31,6 @@ public class DetalleFactura {
     @Column(name = "Cantidad")
     private int cantidad;
 
-    @Column(name = "Precio")
-    private BigDecimal precio;
-
     @Column(name = "Subtotal")
     private BigDecimal subtotal;
 
@@ -43,8 +40,7 @@ public class DetalleFactura {
                 null,
                 new Producto(data.productoId()),
                 data.cantidad(),
-                new BigDecimal(0),
-                BigDecimal.valueOf(data.subtotal())
+                null
         );
     }
 

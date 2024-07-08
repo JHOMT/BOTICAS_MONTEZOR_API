@@ -17,7 +17,6 @@ public class VentaReport {
 
     public VentaReport(DetalleFactura detalleFactura) {
         this.nombre = detalleFactura.getProducto().getNombre();
-        this.precioUnitario = detalleFactura.getPrecio();
         this.cantidad = detalleFactura.getCantidad();
     }
 }

@@ -16,6 +16,7 @@ import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.ProductoRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,34 +42,35 @@ public class VentaProductoService {
     private EmpleadoRepository empleadoRepository;
 
     @Transactional
-    public Venta registrarVenta(@NotNull DataRegisterVenta dataVenta, @NotNull List<DataRegisterDetalleFactura> detalles) {
-        Optional<Cliente> clienteOptional = clienteRepository.findById(dataVenta.clienteID());
-        Empleado empleado = empleadoRepository.findById(dataVenta.empleadoID())
+    public Boolean registrarVenta(@NotNull DataRegisterVentaDetails data) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(data.venta().clienteID());
+        Empleado empleado = empleadoRepository.findById(data.venta().empleadoID())
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
         Cliente cliente;
         if (clienteOptional.isEmpty()) {
             cliente = new Cliente();
             clienteRepository.save(cliente);
-            cliente = clienteRepository.findByDniOrRuc(dataVenta.clienteID())
+            cliente = clienteRepository.findByDniOrRuc(data.venta().clienteID())
                     .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
         } else {
             cliente = clienteOptional.get();
         }
 
-        Venta venta = new Venta(dataVenta);
+        Venta venta = new Venta(data.venta());
         venta.setCliente(cliente);
         venta.setEmpleado(empleado);
+        venta.setFechaventa(LocalDateTime.now());
         venta = ventasRepository.save(venta);
 
-        List<Long> productoIds = detalles.stream().map(DataRegisterDetalleFactura::productoId).collect(Collectors.toList());
+        List<Long> productoIds = data.detalle().stream().map(DataRegisterDetalleFactura::productoId).collect(Collectors.toList());
         List<Producto> productos = productoRepository.findAllById(productoIds);
         Map<Long, Producto> productoMap = productos.stream().collect(Collectors.toMap(Producto::getId, producto -> producto));
 
         BigDecimal montoTotal = BigDecimal.ZERO;
         List<DetalleFactura> detallesFactura = new ArrayList<>();
 
-        for (DataRegisterDetalleFactura detalleDto : detalles) {
+        for (DataRegisterDetalleFactura detalleDto : data.detalle()) {
             Producto producto = productoMap.get(detalleDto.productoId());
             if (producto == null) {
                 throw new RuntimeException("Producto no encontrado: " + detalleDto.productoId());
@@ -85,14 +87,13 @@ public class VentaProductoService {
             detalle.setVenta(venta);
             detalle.setProducto(producto);
             detalle.setCantidad(detalleDto.cantidad());
-            detalle.setPrecio(producto.getPrecioVenta());
             detalle.setSubtotal(subtotal);
 
             montoTotal = montoTotal.add(subtotal);
             detallesFactura.add(detalle);
         }
 
-        if (dataVenta.tipoFactura() == TipoFactura.FACTURA) {
+        if (data.venta().tipoFactura() == TipoFactura.FACTURA) {
             BigDecimal igv = montoTotal.multiply(BigDecimal.valueOf(0.18));
             montoTotal = montoTotal.add(igv);
         }
@@ -101,7 +102,7 @@ public class VentaProductoService {
         ventasRepository.save(venta);
         productoRepository.saveAll(productos);
 
-        return venta;
+        return true;
     }
 
     public List<Venta> listarVentas() {

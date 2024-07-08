@@ -20,7 +20,7 @@ public record DataListVenta(
             venta.getCliente().getNombres(),
             venta.getEmpleado().getId(),
             venta.getEmpleado().getNombres(),
-            venta.getFechaVenta(),
+            venta.getFechaventa(),
             venta.getTipoFactura().name(),
             venta.getTotal()
         );
