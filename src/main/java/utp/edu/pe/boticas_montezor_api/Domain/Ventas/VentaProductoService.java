@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.Cliente;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.ClienteRepository;
-import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataListDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataRegisterDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFacturaRepository;
