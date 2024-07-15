@@ -2,7 +2,6 @@ package utp.edu.pe.boticas_montezor_api.Domain.Ventas;
 
 import jakarta.validation.constraints.NotNull;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataRegisterDetalleFactura;
-import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataListProductos;
 
 import java.util.List;
 

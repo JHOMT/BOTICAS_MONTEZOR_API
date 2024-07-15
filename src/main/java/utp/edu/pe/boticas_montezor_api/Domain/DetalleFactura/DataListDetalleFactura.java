@@ -1,16 +1,23 @@
 package utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
-public record DataListDetalleFactura(
-        Long id,
-        Long ventaId,
-        Long productoId,
-        String nombreProducto,
-        int cantidad,
-        BigDecimal precioVenta,
-        BigDecimal subtotal
-) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataListDetalleFactura {
+    private Long id;
+    private Long ventaId;
+    private Long productoId;
+    private String nombreProducto;
+    private int cantidad;
+    private BigDecimal precioUnitario;
+    private BigDecimal subtotal;
+
     public DataListDetalleFactura(DetalleFactura data) {
         this(
                 data.getId(),

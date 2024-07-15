@@ -1,11 +1,14 @@
 package utp.edu.pe.boticas_montezor_api.Domain.Ventas;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.Cliente;
 import utp.edu.pe.boticas_montezor_api.Domain.Clientes.ClienteRepository;
+import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataListDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DataRegisterDetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFactura;
 import utp.edu.pe.boticas_montezor_api.Domain.DetalleFactura.DetalleFacturaRepository;
@@ -15,12 +18,10 @@ import utp.edu.pe.boticas_montezor_api.Domain.Productos.DataListProductos;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.Producto;
 import utp.edu.pe.boticas_montezor_api.Domain.Productos.ProductoRepository;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +43,7 @@ public class VentaProductoService {
     private EmpleadoRepository empleadoRepository;
 
     @Transactional
-    public Boolean registrarVenta(@NotNull DataRegisterVentaDetails data) {
+    public byte[] registrarVenta(@NotNull DataRegisterVentaDetails data) {
         Optional<Cliente> clienteOptional = clienteRepository.findById(data.venta().clienteID());
         Empleado empleado = empleadoRepository.findById(data.venta().empleadoID())
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
@@ -64,11 +65,14 @@ public class VentaProductoService {
         venta = ventasRepository.save(venta);
 
         List<Long> productoIds = data.detalle().stream().map(DataRegisterDetalleFactura::productoId).collect(Collectors.toList());
+
         List<Producto> productos = productoRepository.findAllById(productoIds);
         Map<Long, Producto> productoMap = productos.stream().collect(Collectors.toMap(Producto::getId, producto -> producto));
 
+
         BigDecimal montoTotal = BigDecimal.ZERO;
         List<DetalleFactura> detallesFactura = new ArrayList<>();
+
 
         for (DataRegisterDetalleFactura detalleDto : data.detalle()) {
             Producto producto = productoMap.get(detalleDto.productoId());
@@ -93,8 +97,13 @@ public class VentaProductoService {
             detallesFactura.add(detalle);
         }
 
+        List<DataListDetalleFactura> dataListDetalleFacturas = detallesFactura.stream()
+                .map(DataListDetalleFactura::new)
+                .toList();
+
+        BigDecimal igv = BigDecimal.ZERO;
         if (data.venta().tipoFactura() == TipoFactura.FACTURA) {
-            BigDecimal igv = montoTotal.multiply(BigDecimal.valueOf(0.18));
+            igv = montoTotal.multiply(BigDecimal.valueOf(0.18));
             montoTotal = montoTotal.add(igv);
         }
         venta.setTotal(montoTotal);
@@ -102,9 +111,46 @@ public class VentaProductoService {
         ventasRepository.save(venta);
         productoRepository.saveAll(productos);
 
-        return true;
+        DataResponseVenta dataVenta = new DataResponseVenta(new DataListVenta(venta), dataListDetalleFacturas);
+        return exportVentaReport(dataVenta, igv);
     }
 
+    public byte[] exportVentaReport(DataResponseVenta data, BigDecimal igv){
+        Cliente cliente = clienteRepository.findById(data.venta().clienteID())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        String ruc = "";
+        if (cliente.getRuc() != null) {
+            ruc = cliente.getRuc();
+        } else {
+            ruc = cliente.getDni();
+        }
+
+        try {
+            BigDecimal subtotalValue = data.productos().stream()
+                    .map(DataListDetalleFactura::getSubtotal)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            BigDecimal totalPrice = subtotalValue.add(igv);
+
+            InputStream jrxmlStream = getClass().getResourceAsStream("/reports/Factura.jrxml");
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data.productos());
+            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("clienteNombre", data.venta().clienteNombre());
+            parameters.put("clienteRUC", ruc);
+            parameters.put("fechaVenta", new Date());
+            parameters.put("SUBTOTAL", subtotalValue);
+            parameters.put("IGV", igv);
+            parameters.put("PRECIO_TOTAL", totalPrice);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public List<DataListVentaDetails> listarVentas(){
         List<Venta> ventas = ventasRepository.findAll();

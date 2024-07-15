@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="VentaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3f30c8e-5c59-4b73-8a8f-128c5a938f35">
+    <parameter name="clienteNombre" class="java.lang.String"/>
+    <parameter name="clienteRUC" class="java.lang.String"/>
+    <parameter name="fechaVenta" class="java.util.Date"/>
+    <parameter name="productosDataSet" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+    <parameter name="SUBTOTAL" class="java.math.BigDecimal"/>
+    <parameter name="IGV" class="java.math.BigDecimal"/>
+    <parameter name="PRECIO_TOTAL" class="java.math.BigDecimal"/>
+
+    <field name="nombreProducto" class="java.lang.String"/>
+    <field name="precioUnitario" class="java.math.BigDecimal"/>
+    <field name="cantidad" class="java.lang.Integer"/>
+
+    <title>
+        <band height="120">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30" forecolor="#000000" uuid="7f0e83c7-42d7-4aaf-b1e4-0d2b37b8f4c0"/>
+                <textElement textAlignment="Center">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Comprobante de Venta BOTICAS MONTEZOR]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="10" y="50" width="300" height="20" uuid="2e9df4a5-7ff1-448a-95a5-2c7c26a72f02"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Cliente: " + $P{clienteNombre}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="10" y="70" width="300" height="20" uuid="c2e1f240-20c7-42a5-bc4e-1f634d060d06"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA["RUC: " + $P{clienteRUC}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="404" y="40" width="140" height="20" uuid="533d33c1-0ea6-41a5-a1f5-2e62b0700d3e"/>
+                <textElement textAlignment="Right">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Fecha: " + $P{fechaVenta}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="180" height="30" forecolor="#FFFFFF" backcolor="#4F81BD" uuid="28efb584-6e95-43b5-ab26-a5d3a15b7c39"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Nombre Producto]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="180" y="0" width="140" height="30" forecolor="#FFFFFF" backcolor="#4F81BD" uuid="f050ea35-cdc1-4e1b-9af2-1ac69a7c1ff6"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Precio Unitario]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="320" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#4F81BD" uuid="2a809fa9-7b78-4fdc-946e-7e39b09280ff"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Cantidad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="420" y="0" width="135" height="30" forecolor="#FFFFFF" backcolor="#4F81BD" uuid="5ccb6be4-9301-4da9-8d6f-2b8a5e10be4d"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="30">
+            <textField>
+                <reportElement x="0" y="0" width="180" height="30" uuid="950d0760-9ec1-402f-bc6b-f26ad7e90285"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="180" y="0" width="140" height="30" uuid="220f4d2e-9e04-4f00-a2f1-87be24c18e41"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{precioUnitario}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="320" y="0" width="100" height="30" uuid="c5d042a6-7f69-464c-b7a8-e764feb48430"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="420" y="0" width="135" height="30" uuid="777a3a6f-a717-46a5-a858-79f38bea8fcd"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{precioUnitario}.multiply(new java.math.BigDecimal($F{cantidad}))]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <summary>
+        <band height="80">
+            <textField>
+                <reportElement x="320" y="10" width="100" height="20" forecolor="#000000" uuid="373f340a-5e0a-4260-97bf-00003e8d0a63"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Subtotal:"]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="420" y="10" width="135" height="20" forecolor="#000000" uuid="0a5d2a84-7ab2-4327-a23f-2d78a69d9863"/>
+                <textElement textAlignment="Right">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{SUBTOTAL}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="320" y="30" width="100" height="20" forecolor="#000000" uuid="385cb3a1-e3e0-4f94-8934-eb6533c3b37c"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["IGV (18%):"]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="420" y="30" width="135" height="20" forecolor="#000000" uuid="76a8c2b6-e8c4-4f2a-b8f5-5a7a60ab1076"/>
+                <textElement textAlignment="Right">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{IGV}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="320" y="50" width="100" height="20" forecolor="#000000" uuid="621c51d2-1013-4d3f-af5e-2d504e6d0313"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Precio Total:"]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="420" y="50" width="135" height="20" forecolor="#000000" uuid="f1b47d2d-0f3e-4f11-8974-3d27934f98b4"/>
+                <textElement textAlignment="Right">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{PRECIO_TOTAL}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>
