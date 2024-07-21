@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import utp.edu.pe.boticas_montezor_api.Domain.Enfermedades.DataRegisterEnfermedad;
 import utp.edu.pe.boticas_montezor_api.Domain.Enfermedades.DataUpdateEnfermedad;
 import utp.edu.pe.boticas_montezor_api.Domain.Enfermedades.EnfermedadService;
+import utp.edu.pe.boticas_montezor_api.Domain.Recetario.DataRegisterRecetario;
 
 @RestController
 @RequestMapping("/enfermedad")
@@ -15,7 +16,7 @@ public class EnfermedadController {
     private EnfermedadService enfermedadService;
 
     @PostMapping
-    public ResponseEntity<?> register(@RequestBody @Valid DataRegisterEnfermedad data){
+    public ResponseEntity<?> register(@RequestBody @Valid DataRegisterRecetario data){
         return ResponseEntity.ok(enfermedadService.createEnfermedad(data));
     }
 
